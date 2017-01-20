@@ -7,8 +7,8 @@ public class PlayerController : MonoBehaviour {
 	public float speed;
 	public float padding = 1f;
 	public GameObject projectile;
-	public float projectileSpeed = 1.0f;
 	public float firingRate = 0.5f;
+	public float health = 50f;
 
 	float xmin;
 	float xmax;
@@ -55,8 +55,21 @@ public class PlayerController : MonoBehaviour {
 
 	//shooting laser
 	void Fire(){
-		GameObject beam = Instantiate(projectile, transform.position, Quaternion.identity) as GameObject;
-		beam.GetComponent<Rigidbody2D>().velocity = Vector2.up * projectileSpeed;
+		GameObject beam = Instantiate(projectile,transform.position, Quaternion.identity) as GameObject;
+		beam.GetComponent<Rigidbody2D>().velocity = Vector2.up * beam.GetComponent<Projectile>().projectileSpeed;
 		
+	}
+
+	void OnTriggerEnter2D(Collider2D col){
+		GameObject hitObj = col.gameObject;
+		if(hitObj.GetComponent<Projectile>()){
+			Hit(hitObj.GetComponent<Projectile>().GetDamage());
+			//Debug.Log(string.Format("Ship is hit, HP @ {0}", hp));
+			Destroy(hitObj);
+		}
+	}
+
+	void Hit(float damage){
+		Debug.Log("hit");
 	}
 }
