@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MusicPlayer : MonoBehaviour {
 
@@ -35,12 +36,22 @@ public class MusicPlayer : MonoBehaviour {
 		
 	}
 
-	void OnLevelWasLoaded (int level)
+	void OnEnable ()
 	{
-		Debug.Log ("Music Player Loaded, " + level);
-		music.Stop ();
+		SceneManager.sceneLoaded += changeMusicOnLevelLoad;
+	}
+	void OnDisable ()
+	{
+		SceneManager.sceneLoaded -= changeMusicOnLevelLoad;
+	}
 
-		switch (level) {
+	void changeMusicOnLevelLoad( Scene scene, LoadSceneMode mode)
+	{
+		Debug.Log ("Music Player Loaded, " + scene);
+		Debug.Log ("Music Player Loaded Mode, " + mode);
+		music.Stop();
+
+		switch (scene.buildIndex) {
 			case 0:
 				music.clip = startClip;
 				music.loop = false;
