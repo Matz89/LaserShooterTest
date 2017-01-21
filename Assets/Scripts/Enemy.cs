@@ -6,6 +6,7 @@ public class Enemy : MonoBehaviour {
 
 	public float hp = 1;
 	public GameObject projectile;
+	public AudioClip deathSound;
 
 
 	public float shotsPerSecond = 0.5f;
@@ -49,8 +50,16 @@ public class Enemy : MonoBehaviour {
 
 		//destroy is hp is below 0
 		if (hp <= 0) {
+			AddScore(1);
+			AudioSource.PlayClipAtPoint(deathSound,transform.position);
 			Destroy(gameObject);
+
 		}
 
+	}
+
+	void AddScore (int i)
+	{
+		GameObject.Find("ScoreNumber").GetComponent<ScoreKeeper>().addScore(i);
 	}
 }

@@ -28,7 +28,7 @@ public class EnemySpawner : MonoBehaviour {
 		xmin = leftmost.x + padding;
 		xmax = rightmost.x - padding;
 		
-		spawnGroup();
+		spawnUntilFull();
 
 	}
 

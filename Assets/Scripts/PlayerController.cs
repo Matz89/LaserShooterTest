@@ -70,6 +70,15 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void Hit(float damage){
-		Debug.Log("hit");
+		health -= damage;
+		if(health <= 0)
+			Dio();
+	}
+
+	void Dio ()
+	{
+		Destroy(gameObject);
+		LevelManager lvlman = GameObject.Find("LevelManager").GetComponent<LevelManager>();
+		lvlman.LoadLevel("Win Screen");
 	}
 }
